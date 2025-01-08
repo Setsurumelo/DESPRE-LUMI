@@ -1,0 +1,89 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.vtcompany.desprelumi.red.HiloCliente;
+import com.vtcompany.desprelumi.utiles.Recursos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public class PantallaRematch implements Screen{
+
+	private BitmapFont fuente;
+	private Rectangle areaMenu;
+	private Rectangle areaRematch;
+	
+	public PantallaRematch() {
+		Utiles.jugador.getEquipo().curarEquipo();
+		Utiles.hiloC = new HiloCliente();
+        Utiles.hiloC.start();
+        Recursos.cargarFuente();
+        Recursos.cargarTexturas();
+        fuente = Recursos.fuente;
+        if (Recursos.musicaActual == Recursos.MUSICA_MENU) {
+            Recursos.reproducirMusica();
+        } else {
+            Recursos.cambiarMusica();
+        }
+        inicializarAreas();
+	}
+	
+	private void inicializarAreas() {
+		areaMenu = new Rectangle(480,340,80,30);
+		areaRematch = new Rectangle(240,340,80,30);
+	}
+
+	@Override
+	public void show() {
+	}
+
+	@Override
+	public void render(float delta) {
+		Utiles.borrarPantalla();
+		Utiles.batch.begin();
+		
+		fuente.draw(Utiles.batch, "Volver al Menu", 480, 340);
+		fuente.draw(Utiles.batch, "Rematch", 240, 340);
+		
+		detectarClic();
+		
+		Utiles.batch.end();
+	}
+
+	private void detectarClic() {
+		if (Gdx.input.justTouched()) {
+            Vector2 touch = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+            if(areaMenu.contains(touch)) {
+            	Utiles.cambiarPantalla(new PantallaPrincipal());
+            }else if (areaRematch.contains(touch)) {
+            	Utiles.cambiarPantalla(new PantallaEspera());
+            }
+		}
+	}
+
+	@Override
+	public void resize(int width, int height) {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}
+
+	@Override
+	public void hide() {
+	}
+
+	@Override
+	public void dispose() {
+		fuente.dispose();
+	}
+
+	
+	
+}

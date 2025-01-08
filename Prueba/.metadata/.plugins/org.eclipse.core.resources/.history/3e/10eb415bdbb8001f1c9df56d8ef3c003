@@ -1,0 +1,76 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.Rectangle;
+import com.vtcompany.desprelumi.utiles.Imagen;
+import com.vtcompany.desprelumi.utiles.Recursos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public class PantallaConfiguracion implements Screen{
+
+	private Imagen fondo;
+	private float a = 0f;
+	private Imagen opcionVolver;
+	private Rectangle areaOpcionVolver;
+	
+	@Override
+	public void show() {
+		// Imagen de fondo
+        fondo = new Imagen(Recursos.PANTALLA_MENU);
+        fondo.cambiarClaridad(0f);
+        
+        // Opciones 
+        opcionVolver = new Imagen(Recursos.OPCION_VOLVER);
+        opcionVolver.setSize(254, 78);
+        opcionVolver.setPosicion(15, 15);
+        
+        // Musica de fondo
+        Recursos.reproducirMusica();
+
+	}
+
+	@Override
+	public void render(float delta) {
+		Utiles.borrarPantalla();
+
+        Utiles.batch.begin();
+        if (a < 1) {
+            cambiarClaridadFondo(delta);
+        }
+        fondo.dibujar(Utiles.batch);
+        Utiles.batch.end();
+	}
+	
+	private void cambiarClaridadFondo(float delta) {
+        a += 0.01f;
+        fondo.cambiarClaridad(Math.min(a, 1f));
+
+        if (a >= 1) {
+            a = 1;
+        }
+    }
+
+	@Override
+	public void resize(int width, int height) {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}
+
+	@Override
+	public void hide() {
+	}
+
+	@Override
+	public void dispose() {
+		fondo.dispose();
+		Recursos.detenerMusica();
+	}
+
+}

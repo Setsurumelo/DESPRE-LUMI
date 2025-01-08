@@ -1,0 +1,49 @@
+pack file version: 1
+
+default-font.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+
+button-up
+xy: 0, 0
+size: 200, 50
+orig: 200, 50
+offset: 0, 0
+index: -1
+
+button-down
+xy: 0, 50
+size: 200, 50
+orig: 200, 50
+offset: 0, 0
+index: -1
+
+button-checked
+xy: 0, 100
+size: 200, 50
+orig: 200, 50
+offset: 0, 0
+index: -1
+
+textfield-background
+xy: 0, 150
+size: 200, 50
+orig: 200, 50
+offset: 0, 0
+index: -1
+
+textfield-focus
+xy: 0, 200
+size: 200, 50
+orig: 200, 50
+offset: 0, 0
+index: -1
+
+cursor
+xy: 0, 250
+size: 10, 50
+orig: 10, 50
+offset: 0, 0
+index: -1

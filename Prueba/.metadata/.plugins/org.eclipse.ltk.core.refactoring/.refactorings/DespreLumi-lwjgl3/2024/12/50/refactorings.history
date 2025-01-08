@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 4 elements to &apos;DespreLumiServer-lwjgl3/src/main/resources&apos;&#x0D;&#x0A;- Original project: &apos;DespreLumi-lwjgl3&apos;&#x0D;&#x0A;- Destination element: &apos;DespreLumiServer-lwjgl3/src/main/resources&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     LogoJuego64.png&#x0D;&#x0A;     LogoJuego32.png&#x0D;&#x0A;     LogoJuego16.png&#x0D;&#x0A;     LogoJuego128.PNG" description="Copy files" destination="=DespreLumiServer-lwjgl3/src\/main\/resources=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/" element1="src/main/resources/LogoJuego64.png" element2="src/main/resources/LogoJuego32.png" element3="src/main/resources/LogoJuego16.png" element4="src/main/resources/LogoJuego128.PNG" files="4" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1734107174633" units="0" version="1.0"/>
+</session>

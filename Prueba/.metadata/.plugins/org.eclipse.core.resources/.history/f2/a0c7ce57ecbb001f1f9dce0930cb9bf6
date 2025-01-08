@@ -1,0 +1,91 @@
+package com.vtcompany.desprelumi.utiles;
+
+import java.util.Random;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.vtcompany.desprelumi.jugadores.Jugador;
+import com.vtcompany.desprelumi.monstruos.Bob;
+import com.vtcompany.desprelumi.monstruos.Dolores;
+import com.vtcompany.desprelumi.monstruos.Monstruo;
+import com.vtcompany.desprelumi.monstruos.Muk;
+import com.vtcompany.desprelumi.pantallas.PantallaPrincipal;
+
+public final class Utiles {
+	
+	public static Game miJuego;
+	public static SpriteBatch batch;
+	public static Jugador jugador;
+	public static Jugador enemigo;
+	private static Random random = new Random();
+	public static BitmapFont font = new BitmapFont();
+	public static boolean empieza = false;
+	
+	public static void decidirGanador(boolean ganar, boolean perder) {
+		BitmapFont fuente = new BitmapFont();
+        fuente.setColor(Color.WHITE);
+        fuente.getData().setScale(2);
+    	if(ganar && !perder) {
+    		fuente.draw(Utiles.batch, "GANASTE", 400, 300);
+    	} else if(!ganar && perder) {
+    		fuente.draw(Utiles.batch, "PERDISTE", 400, 300);
+    	}
+    	ganar= false;
+    	perder=false;
+    	
+    	fuente.dispose();
+    	cambiarPantalla(new PantallaPrincipal());
+	}
+	
+	public static void cambiarPantalla(Screen pantalla) {
+		miJuego.setScreen(pantalla);
+	}
+	
+	public static void borrarPantalla() {
+		ScreenUtils.clear(0, 0, 0, 0);
+	}
+	
+	public static int generarRandomInt(int maximo, int minimo) {
+		return random.nextInt(minimo, maximo) + 1;
+	}
+	
+	public static float generarRandomFloat(float maximo, float minimo) {
+		return random.nextFloat(minimo, maximo);
+	}
+	
+	public static boolean equalsIgnoreAfterWord(String mensaje, String palabra) {
+        return mensaje.split(" ")[0].equals(palabra);
+    }
+	
+	public static String eliminarJugadorYEspacio(String mensaje) {
+        return mensaje.substring("Jugador ".length());
+	}
+	
+	public static String eliminarMonstruoYEspacio(String mensaje) {
+	    return mensaje.replace("Monstruo ", "").trim();
+	}
+	
+	public static Monstruo cambiarStringAMonstruo(String nombre) {
+		Monstruo monstruo = null;
+		switch(nombre) {
+	        case "Muk":
+	            monstruo = new Muk();
+	            System.out.println("Se creo Muk");
+	            break;
+	        case "Dolores":
+	            monstruo = new Dolores();
+	            System.out.println("Se creo Dolores");
+	            break;
+	        case "Bob":
+	            monstruo = new Bob();
+	            System.out.println("Se creo Bob");
+	            break;
+		}
+		return monstruo;
+	}
+	
+}

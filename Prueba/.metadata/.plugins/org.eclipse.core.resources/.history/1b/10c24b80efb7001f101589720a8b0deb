@@ -1,0 +1,50 @@
+@Override
+public void show() {
+    // Configuración de la etapa y el skin
+    stage = new Stage(new ScreenViewport());
+    Gdx.input.setInputProcessor(stage);
+    skin = new Skin(Gdx.files.internal("ui/uiskin.json")); // Asegúrate de tener un skin adecuado
+
+    // Mensaje de instrucción
+    mensaje = new Label("INGRESE SU NOMBRE (8-16 CARACTERES):", skin);
+    mensaje.setFontScale(2.0f);
+
+    // Campo de texto para ingresar el nombre
+    nombreInput = new TextField("", skin);
+    nombreInput.setMaxLength(16);
+    nombreInput.setFocusTraversal(false);  // Desactiva la travesía de foco
+
+    // Botón para confirmar el ingreso del nombre
+    botonConfirmar = new TextButton("CONFIRMAR", skin);
+    botonConfirmar.addListener(event -> {
+        String nombre = nombreInput.getText();
+        if (nombre.length() >= 8 && nombre.length() <= 16) {
+            // Crear al jugador y almacenarlo en Utiles para persistencia
+            Jugador jugador = new Jugador(nombre);
+            Utiles.jugador = jugador; // Asignación al objeto global
+            Utiles.miJuego.setScreen(new PantallaPrincipal()); // Cambia a la pantalla principal después de crear el jugador
+            musica.stop();
+            musica.dispose();
+        } else {
+            mensaje.setText("Nombre inválido. Debe tener entre 8 y 16 caracteres.");
+        }
+        return true; // Esto es importante para que el campo de texto no pierda su valor
+    });
+
+    // Cargar música de fondo (opcional)
+    musica = Recursos.MUSICA_MENU;
+    musica.setLooping(true);
+    musica.play();
+
+    // Layout de la interfaz
+    Table table = new Table();
+    table.setFillParent(true);
+    table.center();
+    table.add(mensaje).padBottom(20);
+    table.row();
+    table.add(nombreInput).padBottom(20);
+    table.row();
+    table.add(botonConfirmar).padTop(10);
+
+    stage.addActor(table);
+}

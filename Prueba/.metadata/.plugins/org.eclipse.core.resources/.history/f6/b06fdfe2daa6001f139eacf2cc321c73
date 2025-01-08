@@ -1,0 +1,23 @@
+package com.vtcompany.desprelumi.monstruos;
+
+import com.vtcompany.desprelumi.tipos.Tipos;
+
+public class Dolores extends Monstruo{
+
+	public Dolores() {
+		super("Dolores", Tipos.LUZ, vida, atk, def, vel);
+	}
+
+	@Override
+	protected void cargarSprites() {
+	}
+
+	@Override
+	protected void cargarAnimacionAtaqueFrente() {
+	}
+
+	@Override
+	protected void cargarAnimacionAtaqueBack() {
+	}
+
+}

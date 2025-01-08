@@ -1,0 +1,108 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.vtcompany.desprelumi.utiles.Imagen;
+import com.vtcompany.desprelumi.utiles.Recursos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public class PantallaPrincipal implements Screen {
+
+    private Imagen fondo;
+    private Imagen opcionMenuBatalla;
+    private Imagen opcionMenuEquipo;
+    private Imagen opcionMenuConfiguracion;
+    private float a = 0f;
+    private Rectangle areaOpcionMenuBatalla;
+    private Rectangle areaOpcionMenuEquipo;
+    private Rectangle areaOpcionMenuConfiguracion;
+    private Music musica;
+
+    @Override
+    public void show() {
+        // Imagen de fondo
+        fondo = new Imagen(Recursos.PANTALLA_MENU);
+        fondo.cambiarClaridad(0f);
+
+        // Opciones de menu
+        opcionMenuBatalla = new Imagen(Recursos.OPCION_LUCHA);
+        opcionMenuBatalla.setPosicion(384, 380);
+        opcionMenuBatalla.setSize(256, 57);
+        
+        opcionMenuEquipo = new Imagen(Recursos.OPCION_EQUIPO);
+        opcionMenuEquipo.setPosicion(362, 280);
+        opcionMenuEquipo.setSize(300, 70);
+        
+        opcionMenuConfiguracion = new Imagen(Recursos.OPCION_CONFIGURACION);
+        opcionMenuConfiguracion.setPosicion(362, 200);
+        opcionMenuConfiguracion.setSize(300, 70);
+
+        // Área interactiva para los botones
+        areaOpcionMenuBatalla = new Rectangle(opcionMenuBatalla.getX(), opcionMenuBatalla.getY(), opcionMenuBatalla.getAncho(), opcionMenuBatalla.getAlto());
+        
+        musica = Recursos.MUSICA_MENU;
+        musica.setLooping(true);
+        musica.play();
+    }
+
+    @Override
+    public void render(float delta) {
+        Utiles.borrarPantalla();
+
+        Utiles.batch.begin();
+        if (a < 1) {
+            cambiarClaridadFondo(delta);
+        }
+        fondo.dibujar(Utiles.batch);
+        opcionMenuBatalla.dibujar(Utiles.batch);
+        opcionMenuEquipo.dibujar(Utiles.batch);
+        opcionMenuConfiguracion.dibujar(Utiles.batch);
+        Utiles.batch.end();
+
+        detectarClic();
+    }
+
+    private void cambiarClaridadFondo(float delta) {
+        a += 0.01f;
+        fondo.cambiarClaridad(Math.min(a, 1f));
+
+        if (a >= 1) {
+            a = 1;
+        }
+    }
+
+    private void detectarClic() {
+        if (Gdx.input.justTouched()) {
+            Vector2 touch = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+
+            // Cambia de pantalla si se hace clic en la opción de menú
+            if (areaOpcionMenuBatalla.contains(touch)) {
+                Utiles.miJuego.setScreen(new PantallaLucha());
+                musica.stop();
+                musica.dispose();
+            }
+        }
+    }
+
+    @Override
+    public void resize(int width, int height) {}
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    @Override
+    public void hide() {
+    }
+
+    @Override
+    public void dispose() {
+        fondo.dispose();
+        opcionMenuBatalla.dispose();
+    }
+}

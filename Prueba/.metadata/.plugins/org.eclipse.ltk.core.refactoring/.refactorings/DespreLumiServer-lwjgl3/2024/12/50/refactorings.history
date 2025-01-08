@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from project &apos;DespreLumiServer-lwjgl3&apos;&#x0D;&#x0A;- Original project: &apos;DespreLumiServer-lwjgl3&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     libgdx128.png&#x0D;&#x0A;     libgdx16.png&#x0D;&#x0A;     libgdx32.png&#x0D;&#x0A;     libgdx64.png" description="Delete elements" element1="src/main/resources/libgdx16.png" element2="src/main/resources/libgdx32.png" element3="src/main/resources/libgdx64.png" element4="src/main/resources/libgdx128.png" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="4" stamp="1734107164876" subPackages="false" version="1.0"/>
+</session>

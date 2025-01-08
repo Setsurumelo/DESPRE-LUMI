@@ -1,0 +1,22 @@
+package com.vtcompany.desprelumiServer.red;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class DireccionRed {
+	
+	private InetAddress ip;
+	private int puerto;
+	
+	public DireccionRed(String ip, int puerto) {
+		try {
+			this.ip = InetAddress.getByName(ip);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.puerto = puerto;
+	}
+	
+	 
+
+}

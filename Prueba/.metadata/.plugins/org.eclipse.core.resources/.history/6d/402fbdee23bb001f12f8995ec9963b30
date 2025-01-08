@@ -1,0 +1,10 @@
+package com.vtcompany.desprelumiServer.red;
+
+import java.net.InetAddress;
+
+public class DireccionRed {
+	
+	private InetAddress ip;
+	private int puerto;
+
+}

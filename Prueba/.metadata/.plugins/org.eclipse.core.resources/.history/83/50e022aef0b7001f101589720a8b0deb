@@ -1,0 +1,108 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.vtcompany.desprelumi.jugadores.Jugador;
+import com.vtcompany.desprelumi.utiles.Recursos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+public class PantallaIngresoNombre implements Screen {
+
+    private Stage stage;
+    private Skin skin;
+    private TextField nombreInput;
+    private TextButton botonConfirmar;
+    private Label mensaje;
+    private Music musica;
+
+    @Override
+    public void show() {
+        // Configuración de la etapa y el skin
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json")); // Asegúrate de tener un skin adecuado
+
+        // Mensaje de instrucción
+        mensaje = new Label("INGRESE SU NOMBRE (8-16 CARACTERES):", skin);
+        mensaje.setFontScale(2.0f);
+
+        // Campo de texto para ingresar el nombre
+        nombreInput = new TextField("", skin);
+        nombreInput.setMaxLength(16);
+        nombreInput.setFocusTraversal(false);  // Desactiva la travesía de foco
+
+        // Botón para confirmar el ingreso del nombre
+        botonConfirmar = new TextButton("CONFIRMAR", skin);
+        botonConfirmar.addListener(event -> {
+            String nombre = nombreInput.getText();
+            if (nombre.length() >= 8 && nombre.length() <= 16) {
+                // Crear al jugador y almacenarlo en Utiles para persistencia
+                Jugador jugador = new Jugador(nombre);
+                Utiles.jugador = jugador; // Asignación al objeto global
+                Utiles.miJuego.setScreen(new PantallaPrincipal()); // Cambia a la pantalla principal después de crear el jugador
+                musica.stop();
+                musica.dispose();
+            } else {
+                // Solo mostrar el mensaje de error y ocultar el campo de texto
+                mensaje.setText("Nombre inválido. Debe tener entre 8 y 16 caracteres.");
+                nombreInput.setText(""); // Limpiar el campo de texto
+                nombreInput.setVisible(false); // Ocultar el campo de texto
+            }
+            return true; // Asegura que el evento se maneje correctamente sin que el foco cambie
+        });
+
+        // Cargar música de fondo (opcional)
+        musica = Recursos.MUSICA_MENU;
+        musica.setLooping(true);
+        musica.play();
+
+        // Layout de la interfaz
+        Table table = new Table();
+        table.setFillParent(true);
+        table.center();
+        table.add(mensaje).padBottom(20);
+        table.row();
+        table.add(nombreInput).padBottom(20);  // El campo de texto se ocultará si el nombre es inválido
+        table.row();
+        table.add(botonConfirmar).padTop(10);
+
+        stage.addActor(table);
+    }
+
+    @Override
+    public void render(float delta) {
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+    }
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    @Override
+    public void hide() {
+        stage.dispose();
+        skin.dispose();
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        skin.dispose();
+    }
+}

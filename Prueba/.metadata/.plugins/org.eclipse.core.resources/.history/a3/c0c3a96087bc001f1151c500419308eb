@@ -1,0 +1,46 @@
+package com.vtcompany.desprelumi.utiles;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
+import java.util.HashMap;
+
+public class ScreenManager {
+    private final Game game;
+    private final HashMap<Class, Screen> screens;
+
+    public ScreenManager(Game game) {
+        this.game = game;
+        this.screens = new HashMap<>();
+    }
+
+    public void showScreen(Class screenClass) {
+        try {
+            Screen screen = screens.get(screenClass);
+            if (screen == null) {
+                screen = createScreen(screenClass);
+                screens.put(screenClass, screen);
+            }
+            game.setScreen(screen);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al crear la pantalla: " + screenClass.getSimpleName(), e);
+        }
+    }
+
+    private Screen createScreen(Class screenClass) {
+        try {
+            return (Screen) screenClass.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al instanciar la pantalla: " + screenClass.getSimpleName(), e);
+        }
+    }
+
+    public void dispose() {
+        for (Screen screen : screens.values()) {
+            if (screen != null) {
+                screen.dispose();
+            }
+        }
+        screens.clear();
+    }
+}
+

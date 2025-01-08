@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+    <fullyQualifiedTypeName name="java.net.DatagramSocket"/>
+    <fullyQualifiedTypeName name="java.net.InetSocketAddress"/>
+    <fullyQualifiedTypeName name="java.net.InetAddress"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumiServer.red.DireccionRed"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.red.HiloCliente"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumiServer.utiles.Utiles"/>
+    <fullyQualifiedTypeName name="java.net.DatagramPacket"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaCarga"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaNombreUsuario"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaLucha"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaEleccionMonstruos"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaConfiguracion"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.BitmapFont"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.utiles.Recursos"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.utiles.ScreenManager"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.efectosAlterados.AlcancesDeEfectos"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.tipos.TablaDeTipos"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaEspera"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaPrincipal"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.efectosAlterados.EfectoAlteradoAplicado"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.utiles.Utiles"/>
+    <fullyQualifiedTypeName name="com.vtcompany.desprelumi.pantallas.PantallaRematch"/>
+</qualifiedTypeNameHistroy>

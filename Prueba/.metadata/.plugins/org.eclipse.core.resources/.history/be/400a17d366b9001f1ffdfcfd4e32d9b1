@@ -1,0 +1,41 @@
+package com.vtcompany.desprelumi.monstruos;
+
+public final class Equipo {
+	
+	private final int CANTIDAD_MAXIMA_MONS = 3;	
+	private int eleccionMonsruo;
+	private Monstruo[] monstruos = new Monstruo[this.CANTIDAD_MAXIMA_MONS];
+	private boolean[] monstruosFallecidos = new boolean[this.CANTIDAD_MAXIMA_MONS];
+	private boolean equipoLleno = false;
+	
+	public Equipo(Monstruo[] monstruos) {
+		this.monstruos = monstruos;
+		this.monstruosFallecidos = new boolean[]{false, false, false};
+		this.equipoLleno = true;
+	}
+	
+	public void verificarMuerteMonstruo() {
+		for(int i = 0 ; i < this.monstruos.length ; i++) {
+			if(this.monstruos[i].getVidaActual() == 0) {
+				this.monstruosFallecidos[i] = true;
+			}
+		}
+	}
+	
+	public void inicializarEleccion(int eleccion) {
+		this.eleccionMonsruo = eleccion;
+	}
+	
+	public void cambiarMonstruoElegido(int newEleccion) {
+		if(this.eleccionMonsruo == newEleccion) {
+			this.eleccionMonsruo = newEleccion;
+		}
+	}
+	
+	public int getEleccionMonsruo() {return eleccionMonsruo;}
+	public Monstruo[] getMonstruos() {return monstruos;}
+	public boolean[] getMonstruosFallecidos() {return monstruosFallecidos;}
+	public boolean isEquipoLleno() {return equipoLleno;}
+	
+	
+}

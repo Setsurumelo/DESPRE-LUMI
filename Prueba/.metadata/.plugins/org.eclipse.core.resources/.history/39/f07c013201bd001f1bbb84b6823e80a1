@@ -1,0 +1,218 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.vtcompany.desprelumi.red.HiloCliente;
+import com.vtcompany.desprelumi.utiles.Recursos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public class PantallaRematch implements Screen {
+
+    private BitmapFont fuente;
+    private Rectangle areaMenu;
+    private Rectangle areaRematch;
+    private GlyphLayout layout; // Objeto GlyphLayout para obtener el tamaño del texto
+
+    public PantallaRematch() {
+        Utiles.jugador.getEquipo().curarEquipo();
+        Utiles.hiloC = new HiloCliente();
+        Utiles.hiloC.start();
+        Recursos.cargarFuente();
+        Recursos.cargarTexturas();
+        fuente = Recursos.fuente;
+        layout = new GlyphLayout(); // Inicializa GlyphLayout
+
+        if (Recursos.musicaActual == Recursos.MUSICA_MENU) {
+            Recursos.reproducirMusica();
+        } else {
+            Recursos.cambiarMusica();
+        }
+        inicializarAreas();
+    }
+
+    private void inicializarAreas() {
+        // Define los textos que quieres mostrar
+        String textoMenu = "Volver al Menu";
+        String textoRematch = "Rematch";
+
+        // Calcula las dimensiones de los textos usando GlyphLayout
+        layout.setText(fuente, textoMenu);
+        float widthMenu = layout.width;
+        float heightMenu = layout.height;
+        
+        layout.setText(fuente, textoRematch);
+        float widthRematch = layout.width;
+        float heightRematch = layout.height;
+
+        // Ajusta las áreas de clic a las posiciones y tamaños donde aparecen los textos
+        float margen = 10; // margen para las áreas de clic
+        areaMenu = new Rectangle(480 - widthMenu / 2 - margen, 340 - heightMenu / 2 - margen, widthMenu + 2 * margen, heightMenu + 2 * margen);
+        areaRematch = new Rectangle(240 - widthRematch / 2 - margen, 340 - heightRematch / 2 - margen, widthRematch + 2 * margen, heightRematch + 2 * margen);
+    }
+
+    @Override
+    public void show() {
+    }
+
+    @Override
+    public void render(float delta) {
+        Utiles.borrarPantalla();
+        Utiles.batch.begin();
+
+        // Dibuja los textos en sus posiciones
+        String textoMenu = "Volver al Menu";
+        String textoRematch = "Rematch";
+        fuente.draw(Utiles.batch, textoMenu, 480, 340);
+        fuente.draw(Utiles.batch, textoRematch, 240, 340);
+
+        detectarClic();
+
+        Utiles.batch.end();
+    }
+
+    private void detectarClic() {
+        if (Gdx.input.justTouched()) {
+            Vector2 touch = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+            if (areaMenu.contains(touch)) {
+                Utiles.cambiarPantalla(new PantallaPrincipal());
+            } else if (areaRematch.contains(touch)) {
+                Utiles.empieza = false;
+                package com.vtcompany.desprelumi.pantallas;
+
+                import com.badlogic.gdx.Gdx;
+                import com.badlogic.gdx.Screen;
+                import com.badlogic.gdx.graphics.g2d.BitmapFont;
+                import com.badlogic.gdx.math.Rectangle;
+                import com.badlogic.gdx.math.Vector2;
+                import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+                import com.vtcompany.desprelumi.red.HiloCliente;
+                import com.vtcompany.desprelumi.utiles.Recursos;
+                import com.vtcompany.desprelumi.utiles.Utiles;
+
+                public class PantallaRematch implements Screen {
+
+                    private BitmapFont fuente;
+                    private Rectangle areaMenu;
+                    private Rectangle areaRematch;
+                    private GlyphLayout layout; // Objeto GlyphLayout para obtener el tamaño del texto
+
+                    public PantallaRematch() {
+                        Utiles.jugador.getEquipo().curarEquipo();
+                        Utiles.hiloC = new HiloCliente();
+                        Utiles.hiloC.start();
+                        Recursos.cargarFuente();
+                        Recursos.cargarTexturas();
+                        fuente = Recursos.fuente;
+                        layout = new GlyphLayout(); // Inicializa GlyphLayout
+
+                        if (Recursos.musicaActual == Recursos.MUSICA_MENU) {
+                            Recursos.reproducirMusica();
+                        } else {
+                            Recursos.cambiarMusica();
+                        }
+                        inicializarAreas();
+                    }
+
+                    private void inicializarAreas() {
+                        // Define los textos que quieres mostrar
+                        String textoMenu = "Volver al Menu";
+                        String textoRematch = "Rematch";
+
+                        // Calcula las dimensiones de los textos usando GlyphLayout
+                        layout.setText(fuente, textoMenu);
+                        float widthMenu = layout.width;
+                        float heightMenu = layout.height;
+                        
+                        layout.setText(fuente, textoRematch);
+                        float widthRematch = layout.width;
+                        float heightRematch = layout.height;
+
+                        // Ajusta las áreas de clic a las posiciones y tamaños donde aparecen los textos
+                        float margen = 10; // margen para las áreas de clic
+                        areaMenu = new Rectangle(480 - widthMenu / 2 - margen, 340 - heightMenu / 2 - margen, widthMenu + 2 * margen, heightMenu + 2 * margen);
+                        areaRematch = new Rectangle(240 - widthRematch / 2 - margen, 340 - heightRematch / 2 - margen, widthRematch + 2 * margen, heightRematch + 2 * margen);
+                    }
+
+                    @Override
+                    public void show() {
+                    }
+
+                    @Override
+                    public void render(float delta) {
+                        Utiles.borrarPantalla();
+                        Utiles.batch.begin();
+
+                        // Dibuja los textos en sus posiciones
+                        String textoMenu = "Volver al Menu";
+                        String textoRematch = "Rematch";
+                        fuente.draw(Utiles.batch, textoMenu, 480, 340);
+                        fuente.draw(Utiles.batch, textoRematch, 240, 340);
+
+                        detectarClic();
+
+                        Utiles.batch.end();
+                    }
+
+                    private void detectarClic() {
+                        if (Gdx.input.justTouched()) {
+                            Vector2 touch = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                            if (areaMenu.contains(touch)) {
+                                Utiles.cambiarPantalla(new PantallaPrincipal());
+                            } else if (areaRematch.contains(touch)) {
+                                Utiles.cambiarPantalla(new PantallaEspera());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void resize(int width, int height) {
+                    }
+
+                    @Override
+                    public void pause() {
+                    }
+
+                    @Override
+                    public void resume() {
+                    }
+
+                    @Override
+                    public void hide() {
+                    }
+
+                    @Override
+                    public void dispose() {
+                        fuente.dispose();
+                    }
+                }
+Utiles.cambiarPantalla(new PantallaEspera());
+                
+            }
+        }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void hide() {
+    }
+
+    @Override
+    public void dispose() {
+        fuente.dispose();
+    }
+}

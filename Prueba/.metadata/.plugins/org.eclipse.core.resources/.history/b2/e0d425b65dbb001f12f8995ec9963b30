@@ -1,0 +1,57 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.vtcompany.desprelumi.red.HiloCliente;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public class PantallaEspera implements Screen{
+
+	private HiloCliente hiloC;
+	
+	private BitmapFont fuente;
+	
+	public PantallaEspera() {
+		hiloC = new HiloCliente();
+        hiloC.start();
+        fuente = new BitmapFont();
+        fuente.setColor(Color.WHITE);
+        fuente.getData().setScale(2);
+	}
+	
+	@Override
+	public void show() {
+	}
+
+	@Override
+	public void render(float delta) {
+		Utiles.borrarPantalla();
+		if(Utiles.empieza) {
+			Utiles.miJuego.setScreen(new PantallaLucha());
+		}else {
+			fuente.draw(Utiles.batch, "Esperando rival...", 400, 300);
+		}
+	}
+
+	@Override
+	public void resize(int width, int height) {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}
+
+	@Override
+	public void hide() {
+	}
+
+	@Override
+	public void dispose() {
+	}
+
+}

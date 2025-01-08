@@ -1,0 +1,155 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.vtcompany.desprelumi.monstruos.Equipo;
+import com.vtcompany.desprelumi.monstruos.Monstruo;
+import com.vtcompany.desprelumi.utiles.Imagen;
+import com.vtcompany.desprelumi.utiles.Recursos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public class PantallaEleccionMonstruos implements Screen{
+	
+	private Imagen fondo;
+	private Imagen titulo;
+	private float a = 0f;
+	private Music musica;
+	private Imagen[] monstruo;
+	private Rectangle[] areaEleccion;
+	private Imagen[] seleccionados; // Almacena los monstruos seleccionados por el jugador (máximo 3)
+	private int seleccionActual = 0; // Contador de selecciones actuales
+
+	@Override
+	public void show() {
+	    fondo = new Imagen(Recursos.PANTALLA_MENU);
+	    fondo.cambiarClaridad(0f);
+	    
+	    titulo = new Imagen(Recursos.OPCION_EQUIPO);
+	    titulo.setPosicion(405, 470);
+	    titulo.setSize(214, 62);
+	    
+	    monstruo = new Imagen[] {
+	        new Imagen(Recursos.BOB),
+	        new Imagen(Recursos.DOLORES),
+	        new Imagen(Recursos.MUK)
+	    };
+	    
+	    setearMonstruos();
+	    areaSet();
+	    
+	    seleccionados = new Imagen[3]; // Máximo 3 monstruos en el equipo
+	    
+	    musica = Recursos.MUSICA_MENU;
+	    musica.setLooping(true);
+	    musica.play();
+	}
+
+	private void areaSet() {
+	    areaEleccion = new Rectangle[monstruo.length];
+	    for (int i = 0; i < monstruo.length; i++) {
+	        areaEleccion[i] = new Rectangle(monstruo[i].getX(), monstruo[i].getY(), monstruo[i].getAncho(), monstruo[i].getAlto());
+	    }
+	}
+
+	private void setearMonstruos() {
+	    for (int i = 0; i < monstruo.length; i++) {
+	        monstruo[i].setSize(128, 128);
+	    }
+	    monstruo[0].setPosicion(226, 20);
+	    monstruo[1].setPosicion(374, 20);
+	    monstruo[2].setPosicion(522, 20);
+	}
+
+	@Override
+	public void render(float delta) {
+	    Utiles.borrarPantalla();
+
+	    Utiles.batch.begin();
+	    if (a < 1) {
+	        cambiarClaridadFondo(delta);
+	    }
+	    fondo.dibujar(Utiles.batch);
+	    titulo.dibujar(Utiles.batch);
+	    dibujarMonstruos();
+	    Utiles.batch.end();
+
+	    detectarClic();
+	}
+
+	private void dibujarMonstruos() {
+	    for (Imagen imagen : monstruo) {
+	        imagen.dibujar(Utiles.batch);
+	    }
+	}
+
+	private void detectarClic() {
+	    if (Gdx.input.justTouched()) {
+	        Vector2 touch = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+
+	        for (int i = 0; i < areaEleccion.length; i++) {
+	            if (areaEleccion[i].contains(touch) && seleccionActual < 3) {
+	                seleccionados[seleccionActual] = monstruo[i];
+	                seleccionActual++;
+	                System.out.println("Monstruo seleccionado: " + i);
+	                
+	                if (seleccionActual == 3) {
+	                    finalizarSeleccion();
+	                }
+	            }
+	        }
+	    }
+	}
+
+	private void finalizarSeleccion() {
+	    Monstruo[] elegidos = new Monstruo[3];
+
+	    for (int i = 0; i < seleccionados.length; i++) {
+	        elegidos[i] = convertirImagenAMonstruo(seleccionados[i]);
+	    }
+
+	    
+	    
+	    // Cambia a la siguiente pantalla (PantallaLucha)
+	    Utiles.miJuego.setScreen(new PantallaLucha());
+	    musica.stop();
+	    musica.dispose();
+	}
+
+	private Monstruo convertirImagenAMonstruo(Imagen imagen) {
+	    // Convierte la imagen seleccionada en un objeto Monstruo.
+	    // Este método necesita ser implementado según tu lógica.
+	    if (imagen == monstruo[0]) return new Monstruo("Bob");
+	    if (imagen == monstruo[1]) return new Monstruo("Dolores");
+	    if (imagen == monstruo[2]) return new Monstruo("Muk");
+	    return null; // Caso por defecto (no debería suceder)
+	}
+
+	private void cambiarClaridadFondo(float delta) {
+	    a += 0.01f;
+	    fondo.cambiarClaridad(Math.min(a, 1f));
+
+	    if (a >= 1) {
+	        a = 1;
+	    }
+	}
+
+	@Override
+	public void resize(int width, int height) {}
+
+	@Override
+	public void pause() {}
+
+	@Override
+	public void resume() {}
+
+	@Override
+	public void hide() {}
+
+	@Override
+	public void dispose() {
+	    fondo.dispose();
+	    musica.dispose();
+	}

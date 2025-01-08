@@ -1,0 +1,18 @@
+{
+    "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+        "font": "default-font",
+        "fontColor": [1, 1, 1, 1]
+    },
+    "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+        "font": "default-font",
+        "up": "button-up",
+        "down": "button-down",
+        "checked": "button-checked"
+    },
+    "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+        "font": "default-font",
+        "background": "textfield-background",
+        "cursor": "cursor",
+        "focusBackground": "textfield-focus"
+    }
+}

@@ -1,0 +1,69 @@
+package com.vtcompany.desprelumi.ataques;
+
+import com.vtcompany.desprelumi.efectosAlterados.AlcancesDeEfectos;
+import com.vtcompany.desprelumi.efectosAlterados.EfectoAlterado;
+import com.vtcompany.desprelumi.efectosAlterados.EfectoAlteradoAplicado;
+import com.vtcompany.desprelumi.monstruos.Equipo;
+import com.vtcompany.desprelumi.monstruos.Monstruo;
+import com.vtcompany.desprelumi.tipos.Tipos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public abstract class Ataque {
+	
+	public Ataque(String nombre, String desc, int potencia, float prec, Tipos tipo, EfectoAlteradoAplicado efecto,
+			float prob, AlcancesDeEfectos alcance) {
+		this.nombre = nombre;
+		this.descripcion = desc;
+		this.potencia = potencia;
+		this.probGolpe = prec;
+		this.tipo = tipo;
+		this.efectoAplicable = efecto;
+		this.probEfectoAlterado = prob;
+		this.alcance = alcance;
+	}
+	
+	//Datos del ataque
+	protected String nombre, descripcion;
+	protected int potencia;
+	protected Tipos tipo;
+	protected float probGolpe;
+	
+	//Efecto
+	protected EfectoAlteradoAplicado efectoAplicable;
+	protected float probEfectoAlterado;
+	protected AlcancesDeEfectos alcance;
+	
+	private void usarEfecto(Equipo equipoAliado, Equipo equipoRival, Monstruo monstruoAtacante, Monstruo monstruoEnemigo) {
+		if(this.efectoAplicable != null && Utiles.generarRandomFloat(1, 0) < this.probEfectoAlterado) {
+			if(this.alcance == AlcancesDeEfectos.EQUIPO_PROPIO) {
+				for(Monstruo monstruoAfectado : equipoAliado.getMonstruos()) {
+					monstruoAfectado.aplicarEfectoAlerado(this.efectoAplicable);
+				}
+			}else if(this.alcance == AlcancesDeEfectos.EQUIPO_RIVAL) {
+				for(Monstruo monstruoAfectado : equipoRival.getMonstruos()) {
+					monstruoAfectado.aplicarEfectoAlerado(this.efectoAplicable);
+				}
+			}else if(this.alcance == AlcancesDeEfectos.MONSTRUO_PROPIO) {
+				monstruoAtacante.aplicarEfectoAlerado(this.efectoAplicable);
+			}else {
+				monstruoEnemigo.aplicarEfectoAlerado(this.efectoAplicable);
+				Utiles.hiloC.enviarMensaje("AplicaME"+efectoAplicable);
+			}
+		}
+	}
+	
+	
+	public int usarAtaque(Equipo equipoAliado, Equipo equipoRival, Monstruo monstruoAtacante, Monstruo monstruoEnemigo) {
+		int daño = 0;
+		usarEfecto(equipoRival, equipoRival, monstruoEnemigo, monstruoEnemigo);
+		return daño;
+	}
+	
+	public String getNombre() {return nombre;}
+	public String getDescripcion() {return descripcion;}
+	public int getPotencia() {return potencia;}
+	public Tipos getTipo() {return tipo;}
+	public float getProbGolpe() {return probGolpe;}
+	public EfectoAlteradoAplicado getEfectoAplicable() {return efectoAplicable;}
+	public float getProbEfectoAlterado() {return probEfectoAlterado;}
+}

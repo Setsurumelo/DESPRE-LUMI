@@ -1,0 +1,101 @@
+package com.vtcompany.desprelumi.pantallas;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.vtcompany.desprelumi.red.HiloCliente;
+import com.vtcompany.desprelumi.utiles.Recursos;
+import com.vtcompany.desprelumi.utiles.Utiles;
+
+public class PantallaRematch implements Screen {
+
+    private BitmapFont fuente;
+    private Rectangle areaMenu;
+    private Rectangle areaRematch;
+
+    public PantallaRematch() {
+        Utiles.jugador.getEquipo().curarEquipo();
+        Utiles.hiloC = new HiloCliente();
+        Utiles.hiloC.start();
+        Recursos.cargarFuente();
+        Recursos.cargarTexturas();
+        fuente = Recursos.fuente;
+        if (Recursos.musicaActual == Recursos.MUSICA_MENU) {
+            Recursos.reproducirMusica();
+        } else {
+            Recursos.cambiarMusica();
+        }
+        inicializarAreas();
+    }
+
+    private void inicializarAreas() {
+        // Ajusta las áreas de clic a las posiciones y tamaños donde aparecen las fuentes
+        String textoMenu = "Volver al Menu";
+        String textoRematch = "Rematch";
+
+        // Define un pequeño margen de área alrededor del texto para que el área de clic sea fácil de interactuar.
+        float margen = 10; // margen para las áreas de clic
+        float widthMenu = fuente.getBounds(textoMenu).width;
+        float heightMenu = fuente.getBounds(textoMenu).height;
+        float widthRematch = fuente.getBounds(textoRematch).width;
+        float heightRematch = fuente.getBounds(textoRematch).height;
+
+        // Ajusta las posiciones y el tamaño de los rectángulos de clic con un pequeño margen adicional
+        areaMenu = new Rectangle(480 - widthMenu / 2 - margen, 340 - heightMenu / 2 - margen, widthMenu + 2 * margen, heightMenu + 2 * margen);
+        areaRematch = new Rectangle(240 - widthRematch / 2 - margen, 340 - heightRematch / 2 - margen, widthRematch + 2 * margen, heightRematch + 2 * margen);
+    }
+
+    @Override
+    public void show() {
+    }
+
+    @Override
+    public void render(float delta) {
+        Utiles.borrarPantalla();
+        Utiles.batch.begin();
+
+        // Dibuja los textos en sus posiciones
+        String textoMenu = "Volver al Menu";
+        String textoRematch = "Rematch";
+        fuente.draw(Utiles.batch, textoMenu, 480, 340);
+        fuente.draw(Utiles.batch, textoRematch, 240, 340);
+
+        detectarClic();
+
+        Utiles.batch.end();
+    }
+
+    private void detectarClic() {
+        if (Gdx.input.justTouched()) {
+            Vector2 touch = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+            if (areaMenu.contains(touch)) {
+                Utiles.cambiarPantalla(new PantallaPrincipal());
+            } else if (areaRematch.contains(touch)) {
+                Utiles.cambiarPantalla(new PantallaEspera());
+            }
+        }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void hide() {
+    }
+
+    @Override
+    public void dispose() {
+        fuente.dispose();
+    }
+}
